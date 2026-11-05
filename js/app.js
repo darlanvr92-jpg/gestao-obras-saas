@@ -169,14 +169,14 @@ function montarEstrutura() {
   const bloqueada = emp && ["bloqueada", "cancelada"].includes(emp.status);
   raiz.innerHTML = `<div class="app" id="app">
     <aside class="lateral">
-      <div class="marca"><div class="logo">${ic("obras")}</div><div><b>${esc(CFG.NOME_APP || "Gestão de Obras")}</b><small>${esc(emp?.nome || "Plataforma")}</small></div></div>
+      <div class="marca"><div class="logo">${ic("obras")}</div><div><b>${esc(CFG.NOME_APP || "Gestão de Obras")}</b><small>${esc(emp?.nome || "Central Administrativa")}</small></div></div>
       <nav>
         ${itens.length ? `<div class="grupo">Principal</div>` : ""}
         ${itens.map((m) => `<a href="#${m.r}" data-r="${m.r}">${ic(m.i)}<span>${m.l}</span></a>`).join("")}
-        ${s.admin_plataforma ? `<div class="grupo">Plataforma</div><a href="#plataforma" data-r="plataforma">${ic("plataforma")}<span>Administração SaaS</span></a>` : ""}
+        ${s.admin_plataforma ? `<div class="grupo">Administração</div><a href="#plataforma" data-r="plataforma">${ic("plataforma")}<span>Central Administrativa</span></a>` : ""}
         <a href="#" id="sair-menu">${ic("sair")}<span>Sair</span></a>
       </nav>
-      ${s.plano ? `<div class="rodape"><div class="plano"><span>Plano ${esc(s.plano.nome)}</span>${emp.status === "teste" ? `<span class="tag lar">Teste até ${fdata(emp.teste_ate)}</span>` : ""}</div></div>` : ""}
+      ${s.plano ? `<div class="rodape"><div class="plano"><span>Plano ${esc(s.plano.nome)}</span>${emp.status === "teste" ? `<span class="tag lar">Avaliação até ${fdata(emp.teste_ate)}</span>` : ""}</div></div>` : ""}
     </aside>
     <div class="fundo-menu" id="fundo-menu"></div>
     <div class="principal">
@@ -186,7 +186,7 @@ function montarEstrutura() {
         <div class="acoes">
           <button class="icone-btn bt-busca-movel" id="bt-busca" aria-label="Pesquisar">${ic("busca")}</button>
           <div style="position:relative"><button class="icone-btn" id="bt-notif" aria-label="Notificações">${ic("sino")}<span class="ponto oculto" id="notif-cont"></span></button><div class="painel-flut oculto" id="notif-painel"></div></div>
-          <div style="position:relative"><button class="perfil-btn" id="bt-perfil"><span class="avatar">${esc(iniciais(s.membro?.nome || S.user?.email))}</span><span class="txt"><b>${esc(s.membro?.nome || "Administrador")}</b><small>${esc(PERFIL_NOME[s.membro?.perfil] || "Plataforma")}</small></span></button>
+          <div style="position:relative"><button class="perfil-btn" id="bt-perfil"><span class="avatar">${esc(iniciais(s.membro?.nome || S.user?.email))}</span><span class="txt"><b>${esc(s.membro?.nome || "Administrador")}</b><small>${esc(PERFIL_NOME[s.membro?.perfil] || "Administração")}</small></span></button>
             <div class="painel-flut menu-perfil oculto" id="perfil-menu" style="width:240px"><div class="cab"><div><b>${esc(s.membro?.nome || "")}</b><div class="mu peq">${esc(S.user?.email || "")}</div></div></div>
               ${s.membro ? `<a href="#configuracoes/conta">${ic("usuario")}Minha conta</a>` : ""}<button id="sair-perfil">${ic("sair")}Sair</button></div></div>
         </div>
