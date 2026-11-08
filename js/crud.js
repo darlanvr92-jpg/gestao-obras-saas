@@ -1,6 +1,6 @@
 // Motor genérico de listas + cadastro (listar, filtrar, paginar, criar, editar, excluir, exportar)
-import { sb, esc, ic, tabela, ligarCliques, formulario, confirmar, toast, msgErro, pode, carregando, limparCache, debounce } from "./core.js";
-import { excel, pdf } from "./exportar.js";
+import { sb, esc, ic, tabela, ligarCliques, formulario, confirmar, toast, msgErro, pode, carregando, limparCache, debounce } from "./core.js?v=202611081100";
+import { excel, pdf } from "./exportar.js?v=202611081100";
 
 const POR_PAGINA = 25;
 

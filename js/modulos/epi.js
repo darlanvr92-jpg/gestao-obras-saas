@@ -1,6 +1,6 @@
-import { sb, S, esc, ic, num, data, hoje, somaDias, tag, pode, toast, msgErro, q, tabela, formulario, modal, funcionariosOp, obrasOp, linkArquivo, ir, dataHora, limparCache } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { pdf } from "../exportar.js";
+import { sb, S, esc, ic, num, data, hoje, somaDias, tag, pode, toast, msgErro, q, tabela, formulario, modal, funcionariosOp, obrasOp, linkArquivo, ir, dataHora, limparCache } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { pdf } from "../exportar.js?v=202611081100";
 
 export async function render(el, [aba = "epis"]) {
   const abas = [["epis", "EPIs"], ["entregas", "Entregas"], ["ficha", "Ficha por funcionário"], ["movimentos", "Movimentações"]];

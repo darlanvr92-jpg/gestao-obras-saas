@@ -1,6 +1,6 @@
-import { sb, S, esc, ic, moeda, data, dataHora, tag, pode, ehAdmin, temRecurso, toast, msgErro, q, tabela, formulario, confirmar, modal, ir, cnpjValido, docFmt } from "../core.js";
-import { PERFIL_NOME, recarregarSessao } from "../app.js";
-import { excelVariasAbas } from "../exportar.js";
+import { sb, S, esc, ic, moeda, data, dataHora, tag, pode, ehAdmin, temRecurso, toast, msgErro, q, tabela, formulario, confirmar, modal, ir, cnpjValido, docFmt } from "../core.js?v=202611081100";
+import { PERFIL_NOME, recarregarSessao } from "../app.js?v=202611081100";
+import { excelVariasAbas } from "../exportar.js?v=202611081100";
 
 const MODS = [["dashboard", "Dashboard"], ["obras", "Obras"], ["compras", "Ordens de compra"], ["notas", "Notas fiscais"], ["estoque", "Estoque"], ["epi", "EPI"], ["diario", "Diário de obra"], ["financeiro", "Financeiro"], ["relatorios", "Relatórios"], ["fornecedores", "Fornecedores"], ["equipe", "Equipe"]];
 const ACOES = [["ver", "Ver"], ["cadastrar", "Cadastrar"], ["editar", "Editar"], ["excluir", "Excluir"], ["aprovar", "Aprovar"], ["exportar", "Exportar"]];
@@ -83,7 +83,7 @@ const ABAS = {
     });
   },
   async atividades(c) {
-    const { listaRecurso } = await import("../crud.js");
+    const { listaRecurso } = await import("../crud.js?v=202611081100");
     const T = { obras: "Obras", ordens_compra: "Ordens de compra", notas_fiscais: "Notas fiscais", lancamentos: "Financeiro", materiais: "Materiais", fornecedores: "Fornecedores", funcionarios: "Funcionários", epis: "EPIs", diarios: "Diário", membros: "Usuários", empresas: "Empresa", depositos: "Depósitos" };
     await listaRecurso(c, { titulo: "Registro de atividades", fonte: "auditoria", modulo: "_", semNovo: true, ordem: ["em", false], busca: ["usuario_nome", "tabela"],
       filtros: [{ k: "tabela", l: "Área", op: Object.entries(T) }, { k: "acao", l: "Ação", op: [["insert", "Criação"], ["update", "Alteração"], ["delete", "Exclusão"]] }],

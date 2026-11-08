@@ -1,7 +1,7 @@
-import { sb, esc, ic, moeda, data, hoje, somaDias, tag, pode, toast, msgErro, q, tabela, confirmar, formulario, modal, fornecedoresOp, obrasOp, lerNumero, ir, docFmt, dataHora } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { anexos } from "../anexos.js";
-import { tagNF } from "./obras.js";
+import { sb, esc, ic, moeda, data, hoje, somaDias, tag, pode, toast, msgErro, q, tabela, confirmar, formulario, modal, fornecedoresOp, obrasOp, lerNumero, ir, docFmt, dataHora } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { anexos } from "../anexos.js?v=202611081100";
+import { tagNF } from "./obras.js?v=202611081100";
 
 const FORMAS = ["Boleto", "PIX", "Transferência", "Cartão", "Dinheiro", "Cheque", "Outro"];
 

@@ -1,7 +1,7 @@
 // =====================================================================
 //  APLICAÇÃO: login, cadastro, estrutura (menu/topo), rotas e notificações
 // =====================================================================
-import { sb, S, CFG, $, $$, esc, ic, toast, msgErro, pode, iniciais, data as fdata, debounce, limparCache, modal, ir } from "./core.js";
+import { sb, S, CFG, $, $$, esc, ic, toast, msgErro, pode, iniciais, data as fdata, debounce, limparCache, modal, ir } from "./core.js?v=202611081100";
 
 const raiz = $("#raiz");
 const MENU = [
@@ -218,11 +218,11 @@ function montarEstrutura() {
 
 // ---------------- rotas ----------------
 const MODULOS = {
-  dashboard: () => import("./modulos/dashboard.js"), obras: () => import("./modulos/obras.js"), compras: () => import("./modulos/compras.js"),
-  notas: () => import("./modulos/notas.js"), estoque: () => import("./modulos/estoque.js"), epi: () => import("./modulos/epi.js"),
-  diario: () => import("./modulos/diario.js"), financeiro: () => import("./modulos/financeiro.js"), relatorios: () => import("./modulos/relatorios.js"),
-  fornecedores: () => import("./modulos/fornecedores.js"), equipe: () => import("./modulos/equipe.js"), configuracoes: () => import("./modulos/configuracoes.js"),
-  plataforma: () => import("./modulos/plataforma.js"),
+  dashboard: () => import("./modulos/dashboard.js?v=202611081100"), obras: () => import("./modulos/obras.js?v=202611081100"), compras: () => import("./modulos/compras.js?v=202611081100"),
+  notas: () => import("./modulos/notas.js?v=202611081100"), estoque: () => import("./modulos/estoque.js?v=202611081100"), epi: () => import("./modulos/epi.js?v=202611081100"),
+  diario: () => import("./modulos/diario.js?v=202611081100"), financeiro: () => import("./modulos/financeiro.js?v=202611081100"), relatorios: () => import("./modulos/relatorios.js?v=202611081100"),
+  fornecedores: () => import("./modulos/fornecedores.js?v=202611081100"), equipe: () => import("./modulos/equipe.js?v=202611081100"), configuracoes: () => import("./modulos/configuracoes.js?v=202611081100"),
+  plataforma: () => import("./modulos/plataforma.js?v=202611081100"),
 };
 let rotaAtual = "";
 async function rotear() {

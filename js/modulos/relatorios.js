@@ -1,7 +1,7 @@
-import { sb, esc, ic, moeda, data, num, hoje, inicioMes, tag, pode, toast, msgErro, q, tabela, obrasOp, fornecedoresOp, funcionariosOp, temRecurso, carregando } from "../core.js";
-import { excel, pdf } from "../exportar.js";
-import { STATUS_OC } from "./compras.js";
-import { STATUS_OBRA } from "./dashboard.js";
+import { sb, esc, ic, moeda, data, num, hoje, inicioMes, tag, pode, toast, msgErro, q, tabela, obrasOp, fornecedoresOp, funcionariosOp, temRecurso, carregando } from "../core.js?v=202611081100";
+import { excel, pdf } from "../exportar.js?v=202611081100";
+import { STATUS_OC } from "./compras.js?v=202611081100";
+import { STATUS_OBRA } from "./dashboard.js?v=202611081100";
 
 const soma = (l, k) => l.reduce((a, r) => a + (+r[k] || 0), 0);
 // cada relatório: filtros usados, consulta e colunas

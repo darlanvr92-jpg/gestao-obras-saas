@@ -1,5 +1,5 @@
 // Componente de anexos (PDF, fotos, XML, boletos, comprovantes) com armazenamento privado
-import { sb, esc, ic, toast, msgErro, pode, confirmar, enviarArquivo, linkArquivo, reduzirImagem, dataHora, q } from "./core.js";
+import { sb, esc, ic, toast, msgErro, pode, confirmar, enviarArquivo, linkArquivo, carregarImagens, caminhoMiniatura, reduzirImagem, dataHora, q } from "./core.js?v=202611081100";
 
 const MOD = { obra: "obras", oc: "compras", nf: "notas", diario: "diario", epi_entrega: "epi", lancamento: "financeiro", fornecedor: "fornecedores" };
 const CAT = { foto: "Foto", pdf: "PDF", xml: "XML fiscal", boleto: "Boleto", comprovante: "Comprovante de pagamento", documento: "Documento", outro: "Outro" };
@@ -21,7 +21,7 @@ export async function anexos(el, entidade, id, { categorias = Object.keys(CAT), 
           <button class="bt sec peq" data-abrir="${a.id}">Abrir</button>${podeApagar ? `<button class="bt sec peq" data-del="${a.id}" title="Excluir">${ic("lixo")}</button>` : ""}</div>`).join("")}</div>
       </div></div>`;
     // miniaturas
-    el.querySelectorAll("[data-img]").forEach(async (img) => { try { img.src = await linkArquivo(img.dataset.img); } catch { /* */ } });
+    carregarImagens(el);
     el.querySelectorAll("[data-abrir]").forEach((b) => b.onclick = async (e) => {
       e.preventDefault(); const a = lst.find((x) => x.id == b.dataset.abrir);
       try { window.open(await linkArquivo(a.caminho, 600), "_blank"); } catch (er) { toast(msgErro(er), "erro"); }
@@ -31,7 +31,7 @@ export async function anexos(el, entidade, id, { categorias = Object.keys(CAT), 
       if (!(await confirmar(`Excluir o arquivo "${a.nome}"?`, { perigo: true, ok: "Excluir" }))) return;
       const { error } = await sb.from("anexos").delete().eq("id", a.id);
       if (error) return toast(msgErro(error), "erro");
-      await sb.storage.from("anexos").remove([a.caminho]); desenhar();
+      await sb.storage.from("anexos").remove([a.caminho, caminhoMiniatura(a.caminho)]); desenhar();
     });
     const enviar = async (files) => {
       const cat = el.querySelector("[data-cat]")?.value || "outro";

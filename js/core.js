@@ -267,22 +267,67 @@ export async function enviarArquivo(entidade, entidadeId, arquivo, categoria = "
   if (error) throw new Error(/mime|type/i.test(error.message) ? "Tipo de arquivo não permitido (use foto, PDF ou XML)." : error.message);
   const { error: e2 } = await sb.from("anexos").insert({ entidade, entidade_id: entidadeId, categoria, nome: arquivo.name, caminho, tipo_mime: tipo, tamanho: arquivo.size });
   if (e2) { await sb.storage.from("anexos").remove([caminho]); throw e2; }
+  // miniatura leve para as galerias (se falhar, a galeria usa a foto original)
+  if (/^image\//.test(tipo)) {
+    const mini = await gerarMiniatura(arquivo);
+    if (mini) await sb.storage.from("anexos").upload(caminhoMiniatura(caminho), mini, { contentType: mini.type, upsert: true });
+  }
   return caminho;
+}
+export const caminhoMiniatura = (c) => c + ".min.webp";
+
+// cria links temporários de vários arquivos em UMA única chamada
+export async function linksArquivos(caminhos, segundos = 3600) {
+  const lista = [...new Set(caminhos.filter(Boolean))];
+  if (!lista.length) return {};
+  const { data: d, error } = await sb.storage.from("anexos").createSignedUrls(lista, segundos);
+  if (error) return {};
+  return Object.fromEntries((d || []).filter((x) => x.signedUrl && !x.error).map((x) => [x.path, x.signedUrl]));
+}
+
+// mostra as fotos de uma galeria: miniatura primeiro, só quando aparecem na tela (lazy loading)
+export async function carregarImagens(el) {
+  const imgs = [...el.querySelectorAll("img[data-img]")];
+  if (!imgs.length) return;
+  imgs.forEach((i) => { i.loading = "lazy"; i.decoding = "async"; });
+  const minis = await linksArquivos(imgs.map((i) => caminhoMiniatura(i.dataset.img)));
+  const faltam = imgs.filter((i) => !minis[caminhoMiniatura(i.dataset.img)]).map((i) => i.dataset.img);
+  const originais = await linksArquivos(faltam);
+  imgs.forEach((i) => {
+    const u = minis[caminhoMiniatura(i.dataset.img)] || originais[i.dataset.img];
+    if (u) i.src = u;
+  });
 }
 export async function linkArquivo(caminho, segundos = 3600) {
   const { data: d, error } = await sb.storage.from("anexos").createSignedUrl(caminho, segundos);
   if (error) throw error; return d.signedUrl;
 }
 
+// redimensiona uma imagem e converte para WebP (mais leve); usa JPEG se o aparelho não gerar WebP
+async function converter(arquivo, max, qual) {
+  const bmp = await createImageBitmap(arquivo);
+  const esc_ = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width * esc_); c.height = Math.round(bmp.height * esc_);
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  bmp.close?.();
+  let blob = await new Promise((r) => c.toBlob(r, "image/webp", qual));
+  if (!blob || blob.type !== "image/webp") blob = await new Promise((r) => c.toBlob(r, "image/jpeg", qual));
+  return blob;
+}
+
 // compacta fotos grandes do celular antes de enviar (economiza internet e espaço)
 export async function reduzirImagem(arquivo, max = 1600, qual = 0.82) {
   if (!/^image\/(jpeg|png|webp)$/.test(arquivo.type) || arquivo.size < 400 * 1024) return arquivo;
   try {
-    const bmp = await createImageBitmap(arquivo);
-    const esc_ = Math.min(1, max / Math.max(bmp.width, bmp.height));
-    const c = document.createElement("canvas"); c.width = Math.round(bmp.width * esc_); c.height = Math.round(bmp.height * esc_);
-    c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
-    const blob = await new Promise((r) => c.toBlob(r, "image/jpeg", qual));
-    return blob ? new File([blob], arquivo.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }) : arquivo;
+    const blob = await converter(arquivo, max, qual);
+    if (!blob || blob.size >= arquivo.size) return arquivo;
+    const ext = blob.type === "image/webp" ? ".webp" : ".jpg";
+    return new File([blob], arquivo.name.replace(/\.\w+$/, ext), { type: blob.type });
   } catch { return arquivo; }
+}
+
+// miniatura de ~360 px para as galerias (cerca de 20 a 40 KB)
+export async function gerarMiniatura(arquivo) {
+  if (!/^image\/(jpeg|png|webp)$/.test(arquivo.type)) return null;
+  try { return await converter(arquivo, 360, 0.7); } catch { return null; }
 }

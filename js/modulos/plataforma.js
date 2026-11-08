@@ -1,6 +1,6 @@
 // Central Administrativa da PLATAFORMA (separada das empresas clientes).
 // Mostra apenas dados cadastrais e de uso — nunca dados financeiros ou documentos privados dos clientes.
-import { sb, esc, ic, moeda, data, dataHora, tag, toast, msgErro, q, tabela, formulario, ir, docFmt } from "../core.js";
+import { sb, esc, ic, moeda, data, dataHora, tag, toast, msgErro, q, tabela, formulario, ir, docFmt } from "../core.js?v=202611081100";
 
 const ST = { teste: ["Em avaliação", "lar"], ativa: ["Ativo", "verde"], inadimplente: ["Pagamento pendente", "verm"], bloqueada: ["Suspenso", "verm"], cancelada: ["Encerrado", "cinza"] };
 const COB = { approved: ["Aprovado", "verde"], rejected: ["Recusado", "verm"], cancelled: ["Cancelado", "cinza"], pending: ["Pendente", "lar"], in_process: ["Em análise", "lar"], processed: ["Processado", "verde"] };

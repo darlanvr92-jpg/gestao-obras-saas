@@ -1,9 +1,9 @@
-import { sb, S, esc, ic, moeda, data, num, tag, barra, pode, toast, msgErro, q, tabela, confirmar, limparCache, docValido, docFmt, ir } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { anexos } from "../anexos.js";
-import { STATUS_OBRA } from "./dashboard.js";
-import { pdf } from "../exportar.js";
-import { STATUS_OC } from "./compras.js";
+import { sb, S, esc, ic, moeda, data, num, tag, barra, pode, toast, msgErro, q, tabela, confirmar, limparCache, docValido, docFmt, ir } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { anexos } from "../anexos.js?v=202611081100";
+import { STATUS_OBRA } from "./dashboard.js?v=202611081100";
+import { pdf } from "../exportar.js?v=202611081100";
+import { STATUS_OC } from "./compras.js?v=202611081100";
 
 export const camposObra = () => [
   { k: "nome", l: "Nome da obra", req: true, s2: true },
@@ -65,7 +65,7 @@ async function detalhe(el, id) {
   const abrir = (k) => { el.querySelectorAll("[data-aba]").forEach((b) => b.classList.toggle("on", b.dataset.aba === k)); ABAS[k](caixa, o); };
   el.querySelectorAll("[data-aba]").forEach((b) => b.onclick = () => abrir(b.dataset.aba));
   el.querySelector("#o-ed")?.addEventListener("click", async () => {
-    const { formulario } = await import("../core.js");
+    const { formulario } = await import("../core.js?v=202611081100");
     formulario({ titulo: "Editar obra", campos: camposObra(), valores: o, tamanho: "larga", salvar: async (v) => {
       await q(sb.from("obras").update(preparar(v)).eq("id", id)); limparCache("obras"); toast("Obra atualizada.", "ok"); detalhe(el, id);
     } });

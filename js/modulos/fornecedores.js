@@ -1,8 +1,8 @@
-import { sb, esc, ic, moeda, data, tag, pode, q, tabela, docFmt, docValido, ir, formulario, toast, limparCache } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { STATUS_OC } from "./compras.js";
-import { tagNF } from "./obras.js";
-import { anexos } from "../anexos.js";
+import { sb, esc, ic, moeda, data, tag, pode, q, tabela, docFmt, docValido, ir, formulario, toast, limparCache } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { STATUS_OC } from "./compras.js?v=202611081100";
+import { tagNF } from "./obras.js?v=202611081100";
+import { anexos } from "../anexos.js?v=202611081100";
 
 const CATS = ["Materiais de construção", "Elétrica", "Hidráulica", "Concreto e agregados", "Aço e ferragens", "Madeira", "Locação de equipamentos", "Serviços", "EPI", "Transporte", "Outros"];
 export const camposForn = [

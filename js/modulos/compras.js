@@ -1,7 +1,7 @@
-import { sb, S, esc, ic, moeda, data, num, hoje, tag, pode, toast, msgErro, q, tabela, confirmar, formulario, modal, camposHTML, lerCampos, obrasOp, fornecedoresOp, depositosOp, lerNumero, ir, docFmt, dataHora } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { anexos } from "../anexos.js";
-import { pdf, imprimir } from "../exportar.js";
+import { sb, S, esc, ic, moeda, data, num, hoje, tag, pode, toast, msgErro, q, tabela, confirmar, formulario, modal, camposHTML, lerCampos, obrasOp, fornecedoresOp, depositosOp, lerNumero, ir, docFmt, dataHora } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { anexos } from "../anexos.js?v=202611081100";
+import { pdf, imprimir } from "../exportar.js?v=202611081100";
 
 export const STATUS_OC = {
   elaboracao: ["Em elaboração", "cinza"], aguardando: ["Aguardando aprovação", "lar"], aprovada: ["Aprovada", "verde"], reprovada: ["Reprovada", "verm"],

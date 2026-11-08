@@ -1,5 +1,5 @@
-import { esc, data, tag, obrasOp, cpfValido, docFmt } from "../core.js";
-import { listaRecurso } from "../crud.js";
+import { esc, data, tag, obrasOp, cpfValido, docFmt } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
 
 const SIT = { ativo: ["Ativo", "verde"], afastado: ["Afastado", "lar"], ferias: ["Férias", "azul"], desligado: ["Desligado", "cinza"] };
 const FUNCOES = ["Engenheiro", "Mestre de obras", "Encarregado", "Pedreiro", "Servente", "Carpinteiro", "Armador", "Eletricista", "Encanador", "Pintor", "Operador de máquinas", "Técnico de segurança", "Almoxarife", "Administrativo", "Outro"];

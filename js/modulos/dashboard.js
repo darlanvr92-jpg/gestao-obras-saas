@@ -1,5 +1,5 @@
-import { sb, S, esc, ic, moeda, data, hoje, inicioMes, fimMes, somaMeses, obrasOp, pode, tag, barra, msgErro, q } from "../core.js";
-import { barras, linhas, rosca, comparativo, mesCurto, CORES } from "../graficos.js";
+import { sb, S, esc, ic, moeda, data, hoje, inicioMes, fimMes, somaMeses, obrasOp, pode, tag, barra, msgErro, q } from "../core.js?v=202611081100";
+import { barras, linhas, rosca, comparativo, mesCurto, CORES } from "../graficos.js?v=202611081100";
 
 export const STATUS_OBRA = { planejamento: ["Planejamento", "cinza"], andamento: ["Em andamento", "azul"], atrasada: ["Atrasada", "verm"], pausada: ["Pausada", "lar"], concluida: ["Concluída", "verde"], cancelada: ["Cancelada", "cinza"] };
 

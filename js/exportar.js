@@ -1,5 +1,27 @@
 // Exportação: PDF (jsPDF) e Excel (SheetJS). Se a biblioteca não carregar, usa impressão / CSV.
-import { S, CFG, esc, hoje, data as fdata, toast } from "./core.js";
+// As bibliotecas (~1 MB) só são baixadas na primeira exportação, não ao abrir o sistema.
+import { S, CFG, esc, hoje, data as fdata, toast } from "./core.js?v=202611081100";
+
+const LIBS = {
+  xlsx: ["https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"],
+  pdf: ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"],
+};
+const carregando = {};
+function script(url) {
+  return carregando[url] ??= new Promise((ok) => {
+    const s = document.createElement("script"); s.src = url; s.async = false;
+    s.onload = () => ok(true); s.onerror = () => { delete carregando[url]; ok(false); };
+    document.head.appendChild(s);
+  });
+}
+async function garantir(tipo) {
+  if (tipo === "xlsx" && window.XLSX) return true;
+  if (tipo === "pdf" && window.jspdf?.jsPDF?.API?.autoTable) return true;
+  const t = setTimeout(() => toast("Preparando o arquivo..."), 400);
+  for (const u of LIBS[tipo]) await script(u);
+  clearTimeout(t);
+  return tipo === "xlsx" ? !!window.XLSX : !!window.jspdf?.jsPDF;
+}
 
 function baixar(blob, nome) {
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = nome;
@@ -14,7 +36,8 @@ function valor(c, r) {
   return v ?? "";
 }
 
-export function excel(titulo, colunas, linhas, info = []) {
+export async function excel(titulo, colunas, linhas, info = []) {
+  await garantir("xlsx");
   const cab = colunas.map((c) => c.l);
   const corpo = linhas.map((r) => colunas.map((c) => { const v = valor(c, r); return ["moeda", "num"].includes(c.tipo) ? Number(v || 0) : v; }));
   if (window.XLSX) {
@@ -33,7 +56,8 @@ export function excel(titulo, colunas, linhas, info = []) {
 }
 
 // várias abas em um único arquivo (backup/exportação geral)
-export function excelVariasAbas(nome, abas) {
+export async function excelVariasAbas(nome, abas) {
+  await garantir("xlsx");
   if (!window.XLSX) return toast("Gerador de Excel indisponível. Verifique a internet e recarregue.", "erro");
   const wb = XLSX.utils.book_new();
   for (const a of abas) {
@@ -43,7 +67,8 @@ export function excelVariasAbas(nome, abas) {
   XLSX.writeFile(wb, nomeArq(nome) + ".xlsx");
 }
 
-export function pdf(titulo, colunas, linhas, { info = [], totais = null, paisagem = null, blocos = [] } = {}) {
+export async function pdf(titulo, colunas, linhas, { info = [], totais = null, paisagem = null, blocos = [] } = {}) {
+  await garantir("pdf");
   const corpo = linhas.map((r) => colunas.map((c) => fmtPdf(c, valor(c, r))));
   const horiz = paisagem ?? colunas.length > 6;
   if (window.jspdf?.jsPDF) {

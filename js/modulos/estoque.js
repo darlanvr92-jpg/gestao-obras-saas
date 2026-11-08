@@ -1,7 +1,7 @@
-import { sb, esc, ic, moeda, data, num, hoje, tag, pode, toast, msgErro, q, tabela, formulario, depositosOp, fornecedoresOp, obrasOp, limparCache, ir, dataHora, carregando } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { UNIDADES } from "./compras.js";
-import { excel, pdf } from "../exportar.js";
+import { sb, esc, ic, moeda, data, num, hoje, tag, pode, toast, msgErro, q, tabela, formulario, depositosOp, fornecedoresOp, obrasOp, limparCache, ir, dataHora, carregando } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { UNIDADES } from "./compras.js?v=202611081100";
+import { excel, pdf } from "../exportar.js?v=202611081100";
 
 const TIPOS = { entrada: ["Entrada", "verde"], saida: ["Saída", "verm"], transferencia: ["Transferência", "azul"], devolucao: ["Devolução", "roxo"], ajuste: ["Ajuste de inventário", "lar"] };
 const CATS = ["Material civil", "Material elétrico", "Material hidráulico", "Pintura", "Ferragens", "Madeira", "Ferramentas", "Acabamento", "Outros"];

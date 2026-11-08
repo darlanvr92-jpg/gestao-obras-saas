@@ -1,7 +1,7 @@
-import { sb, S, esc, ic, data, hoje, tag, pode, toast, msgErro, q, tabela, formulario, obrasOp, ir, dataHora, linkArquivo } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { anexos } from "../anexos.js";
-import { pdf } from "../exportar.js";
+import { sb, S, esc, ic, data, hoje, tag, pode, toast, msgErro, q, tabela, formulario, obrasOp, ir, dataHora, linkArquivo, carregarImagens } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { anexos } from "../anexos.js?v=202611081100";
+import { pdf } from "../exportar.js?v=202611081100";
 
 const CLIMA = ["Ensolarado", "Parcialmente nublado", "Nublado", "Chuvoso", "Chuva forte (paralisação)", "Frio", "Calor intenso"];
 const campos = (obras, aprovado) => [
@@ -81,7 +81,7 @@ async function galeria(el) {
     const grupos = ds.filter((d) => fotos.some((f) => f.entidade_id === d.id));
     el.querySelector("#g-c").innerHTML = grupos.map((d) => `<div class="card" style="margin-bottom:14px"><div class="ct"><h3>${data(d.data)} · ${esc(d.obras?.nome)}</h3><a class="bt sec peq" href="#diario/${d.id}">Abrir diário</a></div><div class="cc"><div class="galeria">
       ${fotos.filter((f) => f.entidade_id === d.id).map((f) => `<a href="#" data-c="${esc(f.caminho)}"><img data-img="${esc(f.caminho)}" alt=""><small>${dataHora(f.criado_em)}</small></a>`).join("")}</div></div></div>`).join("");
-    el.querySelectorAll("[data-img]").forEach(async (i) => { try { i.src = await linkArquivo(i.dataset.img); } catch { /* */ } });
+    carregarImagens(el);
     el.querySelectorAll("[data-c]").forEach((a) => a.onclick = async (e) => { e.preventDefault(); window.open(await linkArquivo(a.dataset.c, 600), "_blank"); });
   };
   el.querySelector("#g-o").onchange = carregar; carregar();

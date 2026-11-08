@@ -1,5 +1,5 @@
 // Gráficos em SVG (sem bibliotecas externas)
-import { esc, moeda } from "./core.js";
+import { esc, moeda } from "./core.js?v=202611081100";
 
 export const CORES = ["#1e63e9", "#16a34a", "#ea8a0c", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d", "#475569", "#f59e0b"];
 const compacto = (v) => { const a = Math.abs(v); return (v < 0 ? "-" : "") + (a >= 1e6 ? (a / 1e6).toFixed(1).replace(".", ",") + " mi" : a >= 1e3 ? (a / 1e3).toFixed(a >= 1e4 ? 0 : 1).replace(".", ",") + " mil" : Math.round(a)); };

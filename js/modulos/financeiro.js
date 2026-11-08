@@ -1,7 +1,7 @@
-import { sb, esc, ic, moeda, data, hoje, somaMeses, inicioMes, fimMes, tag, pode, toast, q, tabela, obrasOp, fornecedoresOp, ir, carregando } from "../core.js";
-import { listaRecurso } from "../crud.js";
-import { registrarPagamento } from "./notas.js";
-import { barras, linhas, mesCurto, CORES } from "../graficos.js";
+import { sb, esc, ic, moeda, data, hoje, somaMeses, inicioMes, fimMes, tag, pode, toast, q, tabela, obrasOp, fornecedoresOp, ir, carregando } from "../core.js?v=202611081100";
+import { listaRecurso } from "../crud.js?v=202611081100";
+import { registrarPagamento } from "./notas.js?v=202611081100";
+import { barras, linhas, mesCurto, CORES } from "../graficos.js?v=202611081100";
 
 const CAT_D = ["Materiais", "Mão de obra", "Equipamentos e locação", "Serviços terceirizados", "Impostos e taxas", "Transporte e frete", "Administrativo", "EPI e segurança", "Outros"];
 const CAT_R = ["Medição", "Adiantamento", "Venda de unidade", "Aditivo de contrato", "Outros"];
@@ -35,7 +35,7 @@ async function camposLanc(tipo) {
 }
 
 async function novo(tipo, ok) {
-  const { formulario } = await import("../core.js");
+  const { formulario } = await import("../core.js?v=202611081100");
   formulario({ titulo: tipo === "receita" ? "Nova receita" : "Nova despesa", campos: await camposLanc(tipo), tamanho: "larga",
     salvar: async (v) => {
       const n = Math.max(1, Math.floor(v.parcelas || 1)); delete v.parcelas;
@@ -67,7 +67,7 @@ function lista(c, tipo, rec, extra = {}) {
     acoesLinha: (r) => pode("financeiro", "editar") && r.status !== "cancelado" ? `<button class="bt ${r.status === "pago" ? "sec" : "verde"} peq" data-pg="${r.id}">${r.status === "pago" ? "Ajustar" : r.tipo === "receita" ? "Receber" : "Pagar"}</button>${!r.nf_id && +r.valor_pago === 0 ? `<button class="bt sec peq" data-cn="${r.id}" title="Cancelar">${ic("x")}</button>` : ""}` : "",
     aoCarregar: (cx, ls) => {
       cx.querySelectorAll("[data-pg]").forEach((b) => b.onclick = () => registrarPagamento(ls.find((x) => x.id == b.dataset.pg), rec));
-      cx.querySelectorAll("[data-cn]").forEach((b) => b.onclick = async () => { const { confirmar } = await import("../core.js"); if (!(await confirmar("Cancelar este lançamento?", { perigo: true }))) return; await q(sb.from("lancamentos").update({ status: "cancelado" }).eq("id", b.dataset.cn)); rec(); });
+      cx.querySelectorAll("[data-cn]").forEach((b) => b.onclick = async () => { const { confirmar } = await import("../core.js?v=202611081100"); if (!(await confirmar("Cancelar este lançamento?", { perigo: true }))) return; await q(sb.from("lancamentos").update({ status: "cancelado" }).eq("id", b.dataset.cn)); rec(); });
     },
     aoClicar: (r) => (r.nf_id ? ir("notas/" + r.nf_id) : null),
     rodape: (d) => { const cols = tipo ? 5 : 6; return [...Array(cols - 1).fill(""), "Total da página", moeda(d.reduce((a, r) => a + +r.valor, 0)), moeda(d.reduce((a, r) => a + +r.valor_pago, 0)), "", ""]; },
